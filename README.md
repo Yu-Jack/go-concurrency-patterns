@@ -5,15 +5,15 @@
 # 大綱
 
 
-| Number | Name                                      |
-|--------|-------------------------------------------|
-| 1      | [Generator](./01-generator)               | 
-| 2      | [Fan-In](./02-fan-in)                     | 
-| 3      | [Fan-Out](./03-fan-out)                   | 
-| 4      | [Fan-In and Fan-Out](./04-fan-in-fan-out) |
+| Concurrency Pattern                          |
+|----------------------------------------------|
+ | [01-Generator](./01-generator)               | 
+ | [02-Fan-In](./02-fan-in)                     | 
+ | [03-Fan-Out](./03-fan-out)                   | 
+ | [04-Fan-In and Fan-Out](./04-fan-in-fan-out) |
 
 # 其他相關使用
 
-| Number | Name                                     |
-|--------|------------------------------------------|
-| 1      | [Graceful Shutdown](./other/01-graceful) | 
+| Other Usage                                 |
+|:--------------------------------------------|
+| [01-Graceful Shutdown](./other/01-graceful) | 
