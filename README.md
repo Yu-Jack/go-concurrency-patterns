@@ -19,3 +19,4 @@
 | Other Usage                                 |
 |:--------------------------------------------|
 | [01-Graceful Shutdown](./other/01-graceful) | 
+| [02-Pub/Sub](./other/02-pub-sub)            | 
