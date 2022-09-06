@@ -7,11 +7,16 @@ import (
 	"time"
 )
 
-var subscribers = make(map[string][]chan int)
+type subscriber struct {
+	name string
+	ch   chan int
+}
+
+var subscribers = make(map[string][]subscriber)
 var mtx sync.Mutex
 var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
-func RandStringRunes(n int) string {
+func randStringRunes(n int) string {
 	b := make([]rune, n)
 	for i := range b {
 		b[i] = letterRunes[rand.Intn(len(letterRunes))]
@@ -19,47 +24,72 @@ func RandStringRunes(n int) string {
 	return string(b)
 }
 
-func subscribe(name string) (<-chan int, string) {
+func subscribe(topic string) subscriber {
 	mtx.Lock()
 	defer mtx.Unlock()
 
-	ch := make(chan int)
-	subscribers[name] = append(subscribers[name], ch)
+	sub := subscriber{
+		name: randStringRunes(5),
+		ch:   make(chan int),
+	}
 
-	return ch, RandStringRunes(5)
+	subscribers[topic] = append(subscribers[topic], sub)
+
+	return sub
 }
 
-func publish(name string, msg int) {
+func publish(topic string, msg int) {
 	mtx.Lock()
 	defer mtx.Unlock()
 
-	if chs, ok := subscribers[name]; ok {
-		for _, ch := range chs {
-			go func(ch chan int) {
-				ch <- msg
-			}(ch)
+	if chs, ok := subscribers[topic]; ok {
+		for _, sub := range chs {
+			go func(sub subscriber) {
+				sub.ch <- msg
+			}(sub)
 		}
 	}
 }
 
-func printChannel(ch <-chan int, name string) {
-	for data := range ch {
-		fmt.Printf("subscriber-%s: %d\n", name, data)
+func unsubscribe(topic string, sub subscriber) {
+	mtx.Lock()
+	defer mtx.Unlock()
+
+	if subs, ok := subscribers[topic]; ok {
+		for i, s := range subs {
+			if s.name == sub.name {
+				newSubs := subs[:i]
+				newSubs = append(newSubs, subs[i+1:]...)
+
+				subscribers[topic] = newSubs
+				return
+			}
+		}
+	}
+}
+
+func printChannel(sub subscriber) {
+	for data := range sub.ch {
+		fmt.Printf("subscriber-%s: %d\n", sub.name, data)
 	}
 }
 
 func main() {
-	s1, name1 := subscribe("name-1")
-	s2, name2 := subscribe("name-1")
-	s3, name3 := subscribe("name-2")
+	s1 := subscribe("name-1")
+	s2 := subscribe("name-1")
+	s3 := subscribe("name-2")
 
-	go printChannel(s1, name1)
-	go printChannel(s2, name2)
-	go printChannel(s3, name3)
+	go printChannel(s1)
+	go printChannel(s2)
+	go printChannel(s3)
 
 	publish("name-1", 1)
 	publish("name-1", 2)
 	publish("name-2", 3)
+
+	unsubscribe("name-2", s3)
+
+	publish("name-2", 333) // not print
 
 	time.Sleep(1 * time.Second)
 }
