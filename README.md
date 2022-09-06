@@ -11,6 +11,7 @@
  | [02-Fan-In](./02-fan-in)                     | 
  | [03-Fan-Out](./03-fan-out)                   | 
  | [04-Fan-In and Fan-Out](./04-fan-in-fan-out) |
+ | [05-Or-Channel](./05-or-channel)             |
 
 # 其他相關使用
 
