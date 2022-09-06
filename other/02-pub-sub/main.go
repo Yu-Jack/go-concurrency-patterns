@@ -42,8 +42,8 @@ func publish(topic string, msg int) {
 	mtx.Lock()
 	defer mtx.Unlock()
 
-	if chs, ok := subscribers[topic]; ok {
-		for _, sub := range chs {
+	if subs, ok := subscribers[topic]; ok {
+		for _, sub := range subs {
 			go func(sub subscriber) {
 				sub.ch <- msg
 			}(sub)
