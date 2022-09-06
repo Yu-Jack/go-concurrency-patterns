@@ -1,6 +1,6 @@
 # Graceful Shutdown
 
-通常應用程式在接受到 `kill -9` `kill -15` 等等相關訊號會直接關閉，但是實際上可以透過程式去處理取得這些 `signal` 時，要怎麼安全地關閉應用程式。
+通常應用程式在接受到 `kill -9` `kill -15` 等等相關訊號會直接關閉，但是實際上可以透過程式去處理取得這些 `signal`，就能安全地關閉應用程式。
 
 
 參考 [Graceful Shutdown Example Code](./main.go)
