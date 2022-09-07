@@ -20,40 +20,38 @@ func generateData() <-chan int {
 	return data
 }
 
-func tee(input <-chan int, outputLen int) []chan int {
-	channels := make([]chan int, outputLen)
-	for i, _ := range channels {
-		channels[i] = make(chan int)
-	}
-
+func tee(input <-chan int, outputs []chan int) {
 	go func() {
 		var wg sync.WaitGroup
 
 		for data := range input {
-			wg.Add(outputLen)
+			wg.Add(len(outputs))
 
-			for i, _ := range channels {
+			for i, _ := range outputs {
 				go func(i int, data int) {
 					defer wg.Done()
 					time.Sleep(time.Duration(i) * time.Second)
-					channels[i] <- data
+					outputs[i] <- data
 				}(i, data)
 			}
 		}
 
 		wg.Wait()
 
-		for _, channel := range channels {
+		for _, channel := range outputs {
 			close(channel)
 		}
 	}()
-
-	return channels
 }
 
 func main() {
+	outputs := make([]chan int, 2)
+	for i, _ := range outputs {
+		outputs[i] = make(chan int)
+	}
+
 	input := generateData()
-	outputs := tee(input, 2)
+	tee(input, outputs)
 
 	for i, output := range outputs {
 		go func(output <-chan int, i int) {

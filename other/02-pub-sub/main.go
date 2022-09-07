@@ -38,16 +38,27 @@ func subscribe(topic string) subscriber {
 	return sub
 }
 
+func tee(input int, outputs []chan int) {
+	go func() {
+		for i, _ := range outputs {
+			go func(i int) {
+				outputs[i] <- input
+			}(i)
+		}
+	}()
+}
+
 func publish(topic string, msg int) {
 	mtx.Lock()
 	defer mtx.Unlock()
 
 	if subs, ok := subscribers[topic]; ok {
+		var channels []chan int
 		for _, sub := range subs {
-			go func(sub subscriber) {
-				sub.ch <- msg
-			}(sub)
+			channels = append(channels, sub.ch)
 		}
+
+		tee(msg, channels)
 	}
 }
 
@@ -91,5 +102,5 @@ func main() {
 
 	publish("name-2", 333) // not print
 
-	time.Sleep(1 * time.Second)
+	time.Sleep(2 * time.Second)
 }
