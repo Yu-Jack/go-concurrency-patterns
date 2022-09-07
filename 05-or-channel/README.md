@@ -4,4 +4,4 @@
 
 參考 [Or Channel Example Code](./main.go)
 
-除了範例使用 `sync.Once` 去預防避免重複關閉之外，可以參考 `orRecursive` 的方式去實現，以個人來說我比較喜歡 `sync.Once`
+除了範例使用 `sync.Once` 去預防避免重複關閉之外，可以參考 `orRecursive` 的方式去實現，以個人來說我比較喜歡 `sync.Once`。

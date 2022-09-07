@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"math/rand"
 	"sync"
@@ -38,17 +39,20 @@ func subscribe(topic string) subscriber {
 	return sub
 }
 
-func tee(input int, outputs []chan int) {
+func tee(ctx context.Context, input int, outputs []chan int) {
 	go func() {
 		for i, _ := range outputs {
 			go func(i int) {
-				outputs[i] <- input
+				select {
+				case outputs[i] <- input:
+				case <-ctx.Done():
+				}
 			}(i)
 		}
 	}()
 }
 
-func publish(topic string, msg int) {
+func publish(ctx context.Context, topic string, msg int) {
 	mtx.Lock()
 	defer mtx.Unlock()
 
@@ -58,7 +62,7 @@ func publish(topic string, msg int) {
 			channels = append(channels, sub.ch)
 		}
 
-		tee(msg, channels)
+		tee(ctx, msg, channels)
 	}
 }
 
@@ -86,6 +90,9 @@ func printChannel(sub subscriber) {
 }
 
 func main() {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
 	s1 := subscribe("name-1")
 	s2 := subscribe("name-1")
 	s3 := subscribe("name-2")
@@ -94,13 +101,13 @@ func main() {
 	go printChannel(s2)
 	go printChannel(s3)
 
-	publish("name-1", 1)
-	publish("name-1", 2)
-	publish("name-2", 3)
+	publish(ctx, "name-1", 1)
+	publish(ctx, "name-1", 2)
+	publish(ctx, "name-2", 3)
 
 	unsubscribe("name-2", s3)
 
-	publish("name-2", 333) // not print
+	publish(ctx, "name-2", 333) // not print
 
 	time.Sleep(2 * time.Second)
 }
