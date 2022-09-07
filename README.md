@@ -14,6 +14,7 @@
  | [05: Or-Channel](./05-or-channel)             |
  | [06: Or-Done-Channel](./06-or-done-channel)   |
  | [07: Tee-Channel](./07-tee-channel)           |
+ | [08: Bridge-Channel](./08-bridge-channel)     |
 
 # 其他相關使用
 
