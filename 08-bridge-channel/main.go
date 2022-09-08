@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"runtime"
 )
 
 func generateStreams() <-chan <-chan int {
@@ -74,4 +75,6 @@ func main() {
 	for val := range bridge(ctx, inputs) {
 		fmt.Println(val)
 	}
+
+	fmt.Printf("expected 1 goroutine, got goroutine: %d\n", runtime.NumGoroutine())
 }

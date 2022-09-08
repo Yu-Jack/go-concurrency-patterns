@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"runtime"
 	"time"
 )
 
@@ -50,4 +51,6 @@ func main() {
 	}()
 
 	time.Sleep(1 * time.Second) // Easily use time.Sleep to wait them finished instead of sync.WaitGroup
+
+	fmt.Printf("expected 1 goroutine, got goroutine: %d\n", runtime.NumGoroutine())
 }

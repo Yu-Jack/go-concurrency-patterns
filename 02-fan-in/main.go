@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"runtime"
 	"sync"
 )
 
@@ -24,7 +25,7 @@ func fanIn(sources ...<-chan int) <-chan int {
 
 	go func() {
 		defer close(target)
-		
+
 		wg := sync.WaitGroup{}
 
 		for _, source := range sources {
@@ -52,4 +53,6 @@ func main() {
 	for d := range target {
 		fmt.Println(d)
 	}
+
+	fmt.Printf("expected 1 goroutine, got goroutine: %d\n", runtime.NumGoroutine())
 }

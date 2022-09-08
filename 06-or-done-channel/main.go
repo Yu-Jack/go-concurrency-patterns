@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"runtime"
 	"sync"
 	"time"
 )
@@ -62,5 +63,7 @@ func main() {
 
 	fmt.Printf("done after %v\n", time.Since(start))
 
-	time.Sleep(1 * time.Second) // avoid no any error occurring
+	time.Sleep(5 * time.Second)
+
+	fmt.Printf("expected 1 goroutine, got goroutine: %d\n", runtime.NumGoroutine())
 }

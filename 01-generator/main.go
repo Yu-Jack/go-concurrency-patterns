@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
 func generateData() <-chan int {
 	data := make(chan int, 1)
@@ -12,7 +15,7 @@ func generateData() <-chan int {
 
 		close(data)
 	}(data)
-	
+
 	return data
 }
 
@@ -22,4 +25,6 @@ func main() {
 	for d := range data {
 		fmt.Println(d)
 	}
+
+	fmt.Printf("expected 1 goroutine, got goroutine: %d\n", runtime.NumGoroutine())
 }

@@ -4,13 +4,15 @@ import (
 	"context"
 	"fmt"
 	"math/rand"
+	"runtime"
 	"sync"
 	"time"
 )
 
 type subscriber struct {
-	name string
-	ch   chan int
+	name  string
+	ch    chan int
+	topic string
 }
 
 var subscribers = make(map[string][]subscriber)
@@ -30,8 +32,9 @@ func subscribe(topic string) subscriber {
 	defer mtx.Unlock()
 
 	sub := subscriber{
-		name: randStringRunes(5),
-		ch:   make(chan int),
+		name:  randStringRunes(5),
+		ch:    make(chan int),
+		topic: topic,
 	}
 
 	subscribers[topic] = append(subscribers[topic], sub)
@@ -40,16 +43,14 @@ func subscribe(topic string) subscriber {
 }
 
 func tee(ctx context.Context, input int, outputs []chan int) {
-	go func() {
-		for i, _ := range outputs {
-			go func(i int) {
-				select {
-				case outputs[i] <- input:
-				case <-ctx.Done():
-				}
-			}(i)
-		}
-	}()
+	for i, _ := range outputs {
+		go func(i int) {
+			select {
+			case outputs[i] <- input:
+			case <-ctx.Done():
+			}
+		}(i)
+	}
 }
 
 func publish(ctx context.Context, topic string, msg int) {
@@ -62,7 +63,9 @@ func publish(ctx context.Context, topic string, msg int) {
 			channels = append(channels, sub.ch)
 		}
 
-		tee(ctx, msg, channels)
+		if len(channels) != 0 {
+			tee(ctx, msg, channels)
+		}
 	}
 }
 
@@ -85,7 +88,7 @@ func unsubscribe(topic string, sub subscriber) {
 
 func printChannel(sub subscriber) {
 	for data := range sub.ch {
-		fmt.Printf("subscriber-%s: %d\n", sub.name, data)
+		fmt.Printf("subscriber-%s-%s: %d\n", sub.topic, sub.name, data)
 	}
 }
 
@@ -109,5 +112,7 @@ func main() {
 
 	publish(ctx, "name-2", 333) // not print
 
-	time.Sleep(2 * time.Second)
+	time.Sleep(5 * time.Second)
+
+	fmt.Printf("expected 3 goroutine, got goroutine: %d\n", runtime.NumGoroutine())
 }
