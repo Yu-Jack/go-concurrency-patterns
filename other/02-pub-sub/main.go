@@ -119,6 +119,11 @@ func main() {
 	unsubscribe("name-2", s3)
 	publish(ctx, "name-2", 333) // not print
 
+	//publish(ctx, "name-2", 3) // print
+	//time.Sleep(500 * time.Millisecond)
+	//unsubscribe("name-2", s3)
+	//publish(ctx, "name-2", 333) // not print
+
 	time.Sleep(5 * time.Second)
 
 	fmt.Printf("expected 3 goroutine, got goroutine: %d\n", runtime.NumGoroutine())
