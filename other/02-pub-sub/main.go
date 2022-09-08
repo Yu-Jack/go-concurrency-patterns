@@ -13,6 +13,7 @@ type subscriber struct {
 	name  string
 	ch    chan int
 	topic string
+	close chan struct{}
 }
 
 var subscribers = make(map[string][]subscriber)
@@ -35,6 +36,7 @@ func subscribe(topic string) subscriber {
 		name:  randStringRunes(5),
 		ch:    make(chan int),
 		topic: topic,
+		close: make(chan struct{}, 1),
 	}
 
 	subscribers[topic] = append(subscribers[topic], sub)
@@ -42,14 +44,22 @@ func subscribe(topic string) subscriber {
 	return sub
 }
 
-func tee(ctx context.Context, input int, outputs []chan int) {
-	for i, _ := range outputs {
-		go func(i int) {
+func tee(ctx context.Context, input int, outputs []subscriber) {
+	for _, output := range outputs {
+
+		go func(output subscriber) {
 			select {
-			case outputs[i] <- input:
+			case <-output.close:
+				fmt.Printf("channe-%s-%s is closed, you can't send message into it.\n", output.topic, output.name)
+				return
+			default:
+			}
+
+			select {
+			case output.ch <- input:
 			case <-ctx.Done():
 			}
-		}(i)
+		}(output)
 	}
 }
 
@@ -58,13 +68,8 @@ func publish(ctx context.Context, topic string, msg int) {
 	defer mtx.Unlock()
 
 	if subs, ok := subscribers[topic]; ok {
-		var channels []chan int
-		for _, sub := range subs {
-			channels = append(channels, sub.ch)
-		}
-
-		if len(channels) != 0 {
-			tee(ctx, msg, channels)
+		if len(subs) != 0 {
+			tee(ctx, msg, subs)
 		}
 	}
 }
@@ -76,6 +81,9 @@ func unsubscribe(topic string, sub subscriber) {
 	if subs, ok := subscribers[topic]; ok {
 		for i, s := range subs {
 			if s.name == sub.name {
+				close(s.ch)
+				s.close <- struct{}{}
+
 				newSubs := subs[:i]
 				newSubs = append(newSubs, subs[i+1:]...)
 
