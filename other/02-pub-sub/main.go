@@ -114,10 +114,9 @@ func main() {
 
 	publish(ctx, "name-1", 1)
 	publish(ctx, "name-1", 2)
-	publish(ctx, "name-2", 3)
 
+	publish(ctx, "name-2", 3) // not print, because below unsubscribe close the channel before this publish
 	unsubscribe("name-2", s3)
-
 	publish(ctx, "name-2", 333) // not print
 
 	time.Sleep(5 * time.Second)
