@@ -20,10 +20,4 @@ This repo is demo for golang concurrent patterns.
 | Other Usage                                  |
 |:---------------------------------------------|
 | [01: Graceful Shutdown](./other/01-graceful) | 
-| [02: Pub/Sub](./other/02-pub-sub)            | 
-
-
-# Translation
-
-1. [English](https://github.com/Yu-Jack/go-concurrency-patterns)
-2. [繁體中文](https://github.com/Yu-Jack/go-concurrency-patterns/tree/zh-TW)
+| [02: Pub/Sub](./other/02-pub-sub)            |
