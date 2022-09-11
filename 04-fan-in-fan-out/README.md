@@ -1,5 +1,8 @@
 # Fan-In and Fan-Out
 
-把以上兩種做一個整合範例，雖然這範例看起來跟直接讀兩個 channel 很像，但實際上同個 target1 channel 是有可能拿到同樣的值的。
 
-參考 [Fan-In and Fan-Out Example Code](./main.go)
+Combine Fan-in and Fan-out into a example code.
+
+Although it looks like to read data directly from two channel, target1 channel has chance to read same value in this example.
+
+Refer [Fan-In and Fan-Out Example Code](./main.go)

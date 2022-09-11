@@ -1,12 +1,11 @@
 # Graceful Shutdown
 
-通常應用程式在接受到 `kill -9` `kill -15` 等等相關訊號會直接關閉，但是實際上可以透過程式去處理取得這些 `signal`，就能安全地關閉應用程式。
+After the application accept `kill -9` `kill -15`, it will be closed. Actually, program can control the shutdown flow by intercepting the signal from os, then you could shut down application safely.
 
-
-參考 [Graceful Shutdown Example Code](./main.go)
+Refer [Graceful Shutdown Example Code](./main.go).
 
 https://github.com/Yu-Jack/go-concurrency-patterns/blob/54f045e707fc514270433e955ad25f52d41e6869/other/01-graceful/main.go#L40-L41
 
-在範例程式中，可以試著換成 `newNormalContext`，並且在印出 0 的時候去中斷程式，會看到使用 `newNormalContext` 時並不會看到 1 被印出來，就意外的被中斷。
+In the example, you could use `newNormalContext`. Then shutdown program (ctrl+c) while the console prints `0`. The console doesn't show `1` because program is closed accidentally.
 
-但是當使用 `newGracefulContext` 接收 signal 的情況下，可以做一些後續收尾的動作。所以用這個 `newGracefulContext` 看到 0 的時候去中斷程式，會看到 1 被印出來。
+But when use `newGracefulContext`, the console will print `1`. Because it intercepts the signal, then program can prepare to shutdown in advance to avoid being closed accidentally.

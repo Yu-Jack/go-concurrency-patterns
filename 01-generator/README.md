@@ -1,11 +1,13 @@
 # Generator
 
+Generator is used as pipeline to avoid reading a lot of data.
 
-通常可以拿來做 pipeline 使用，避免一次讀取太大量資料。 其他使用方式還有類似 graceful shutdown 的方法。
+Refer [Generator Pattern Example Code](./main.go)
 
-參考 [Generator Pattern Example Code](./main.go)
+Note: The generator which create channel should be responsible for closing its channel because there are two characteristics.
 
-補充: 通常產生 channel 人最好要負責關閉 channel，原因有以下兩點
+1. Can't send data into closed channel
+2. Can read data from closed channel
 
-1. 無法向已 closed channel 寫入資料
-2. 可以讀取已 closed channel 的資料
+
+Other usage is like graceful shutdown, you could see [01: Graceful Shutdown](./other/01-graceful).

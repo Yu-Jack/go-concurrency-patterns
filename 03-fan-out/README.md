@@ -1,5 +1,5 @@
 # Fan-out
 
-通常可以拿來當做 Message Queue 使用，從單一 input 散佈到各個地方去。
+Fan-out is used to spread message to anywhere, just like Message Queue.
 
-參考 [Fan-Out Pattern Example Code](./main.go)
+Refer [Fan-Out Pattern Example Code](./main.go)

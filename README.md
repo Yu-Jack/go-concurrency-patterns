@@ -1,8 +1,8 @@
-# 介紹
+# Introduction
 
-此專案是 go concurrency patterns 的各式範例
+This repo is demo for golang concurrent patterns.
 
-# 大綱
+# Outline
 
 | Concurrency Pattern                           |
 |-----------------------------------------------|
@@ -15,7 +15,7 @@
  | [07: Tee-Channel](./07-tee-channel)           |
  | [08: Bridge-Channel](./08-bridge-channel)     |
 
-# 其他相關使用
+# Related Usage
 
 | Other Usage                                  |
 |:---------------------------------------------|
@@ -23,7 +23,7 @@
 | [02: Pub/Sub](./other/02-pub-sub)            | 
 
 
-# 翻譯
+# Translation
 
 1. [English](https://github.com/Yu-Jack/go-concurrency-patterns)
 2. [繁體中文](https://github.com/Yu-Jack/go-concurrency-patterns/tree/zh-TW)
