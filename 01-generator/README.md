@@ -1,6 +1,6 @@
 # Generator
 
-Generator is used as pipeline to avoid reading a lot of data.
+Generator is function that returns a channel. 
 
 Refer [Generator Pattern Example Code](./main.go)
 
@@ -10,4 +10,4 @@ Note: The generator which create channel should be responsible for closing its c
 2. Can read data from closed channel
 
 
-Other usage is like graceful shutdown, you could see [01: Graceful Shutdown](/other/01-graceful).
+It could be used as pipeline to avoid reading a lot of data or graceful shutdown, you could see [01: Graceful Shutdown](/other/01-graceful).
