@@ -34,7 +34,7 @@ func main() {
 
 		counter++
 		if counter == 5 {
-			done <- struct{}{} // we want it done when counter is five.
+			close(done)
 		}
 	}
 

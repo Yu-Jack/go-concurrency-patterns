@@ -7,7 +7,7 @@ This repo demos for golang concurrent patterns.
 | Concurrency Pattern                           |
 |-----------------------------------------------|
  | [01: Generator](./01-generator)               | 
- | [02: Done channel](./01-done)                 | 
+ | [02: Done channel](./02-done-channel)         | 
  | [03: Pipeline](./03-pipeline)                 | 
  | [04: Fan-In](./04-fan-in)                     | 
  | [05: Fan-Out](./05-fan-out)                   | 
