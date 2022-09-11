@@ -1,6 +1,6 @@
 # Introduction
 
-This repo is demo for golang concurrent patterns.
+This repo demos for golang concurrent patterns.
 
 # Outline
 
