@@ -25,5 +25,5 @@
 
 # 翻譯
 
-1. 繁體中文
-2. English
+1. [English](https://github.com/Yu-Jack/go-concurrency-patterns)
+2. [繁體中文](https://github.com/Yu-Jack/go-concurrency-patterns/tree/zh-TW)
