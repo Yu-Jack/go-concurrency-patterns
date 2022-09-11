@@ -7,13 +7,14 @@ This repo is demo for golang concurrent patterns.
 | Concurrency Pattern                           |
 |-----------------------------------------------|
  | [01: Generator](./01-generator)               | 
- | [02: Fan-In](./02-fan-in)                     | 
- | [03: Fan-Out](./03-fan-out)                   | 
- | [04: Fan-In and Fan-Out](./04-fan-in-fan-out) |
- | [05: Or-Channel](./05-or-channel)             |
- | [06: Or-Done-Channel](./06-or-done-channel)   |
- | [07: Tee-Channel](./07-tee-channel)           |
- | [08: Bridge-Channel](./08-bridge-channel)     |
+ | [02: Pipeline](./02-pipeline)                 | 
+ | [03: Fan-In](./03-fan-in)                     | 
+ | [02: Fan-Out](./04-fan-out)                   | 
+ | [05: Fan-In and Fan-Out](./06-fan-in-fan-out) |
+ | [06: Or-Channel](./07-or-channel)             |
+ | [07: Or-Done-Channel](./08-or-done-channel)   |
+ | [08: Tee-Channel](./09-tee-channel)           |
+ | [09: Bridge-Channel](./00-bridge-channel)     |
 
 # Related Usage
 
