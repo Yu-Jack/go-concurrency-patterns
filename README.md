@@ -4,7 +4,6 @@
 
 # 大綱
 
-
 | Concurrency Pattern                           |
 |-----------------------------------------------|
  | [01: Generator](./01-generator)               | 
@@ -22,3 +21,9 @@
 |:---------------------------------------------|
 | [01: Graceful Shutdown](./other/01-graceful) | 
 | [02: Pub/Sub](./other/02-pub-sub)            | 
+
+
+# 翻譯
+
+1. 繁體中文
+2. English
