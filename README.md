@@ -17,7 +17,7 @@ In each example, it will print `expected 1 goroutine, got goroutine: 1`. That me
  | [07: Or-Channel](./07-or-channel)             |
  | [08: Or-Done-Channel](./08-or-done-channel)   |
  | [09: Tee-Channel](./09-tee-channel)           |
- | [10: Bridge-Channel](./00-bridge-channel)     |
+ | [10: Bridge-Channel](./10-bridge-channel)     |
 
 # Related Usage
 
