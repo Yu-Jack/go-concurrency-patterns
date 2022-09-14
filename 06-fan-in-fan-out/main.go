@@ -8,7 +8,7 @@ import (
 )
 
 func generateData() <-chan int {
-	data := make(chan int, 1)
+	data := make(chan int)
 
 	go func(data chan int) {
 		for i := 0; i < 10; i++ {
@@ -22,7 +22,7 @@ func generateData() <-chan int {
 }
 
 func fanIn(sources ...<-chan int) <-chan int {
-	target := make(chan int, 1)
+	target := make(chan int)
 
 	go func() {
 		defer close(target)
@@ -47,7 +47,7 @@ func fanIn(sources ...<-chan int) <-chan int {
 }
 
 func fanOut(data <-chan int) <-chan int {
-	target := make(chan int, 1)
+	target := make(chan int)
 
 	go func(data <-chan int) {
 		defer close(target)

@@ -38,6 +38,7 @@ func or(sources ...<-chan int) <-chan int {
 }
 
 func orRecursive(sources ...<-chan int) <-chan int {
+	// this is slice length, not the channel size.
 	if len(sources) == 0 {
 		return nil
 	}

@@ -1,10 +1,14 @@
 # Introduction
 
-This repo demos for golang concurrent patterns. 
+This repo demos for golang concurrency patterns after read [Concurrency in Go](https://www.oreilly.com/library/view/concurrency-in-go/9781491941294/). There are something I modified in these examples.
+
+1. Buffered or unbuffered channel both are okay, it doesn't have effect in these examples. But for memory efficiency, I choose unbuffered channel.
+2. I reorder the pattern for easily learning based on my opinion. So there might be a difference between repo and book. 
+3. In each example, it will print `expected 1 goroutine, got goroutine: 1`. That means the program close all goroutines safely (except main goroutine) to avoid goroutine leaks.
 
 # Outline
 
-In each example, it will print `expected 1 goroutine, got goroutine: 1`. That means the program close all goroutines safely (except main goroutine) to avoid goroutine leaking.
+
 
 | Concurrency Pattern                           |
 |-----------------------------------------------|
@@ -25,3 +29,7 @@ In each example, it will print `expected 1 goroutine, got goroutine: 1`. That me
 |:---------------------------------------------|
 | [01: Graceful Shutdown](./other/01-graceful) | 
 | [02: Pub/Sub](./other/02-pub-sub)            |
+
+# References
+
+1. [Concurrency in Go](https://www.oreilly.com/library/view/concurrency-in-go/9781491941294/). 

@@ -9,7 +9,7 @@ import (
 )
 
 func generateData() <-chan int {
-	data := make(chan int, 1)
+	data := make(chan int)
 
 	go func(data chan int) {
 		for i := 0; i < 2; i++ {
