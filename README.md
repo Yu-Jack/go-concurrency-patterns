@@ -1,8 +1,10 @@
 # Introduction
 
-This repo demos for golang concurrent patterns.
+This repo demos for golang concurrent patterns. 
 
 # Outline
+
+In each example, it will print `expected 1 goroutine, got goroutine: 1`. That means the program close all goroutines safely (except main goroutine) to avoid goroutine leaking.
 
 | Concurrency Pattern                           |
 |-----------------------------------------------|
