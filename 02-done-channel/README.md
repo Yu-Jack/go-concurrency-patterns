@@ -1,6 +1,6 @@
 # Done Channel
 
-Done channel is used as coordinator to communicate between different goroutine about which one is done. 
+Done channel is used to prevent goroutine leaking. For example, what happen if previous generator example doesn't close channel? That means there is a goroutine is running forever. Furthermore, what happen if you call this generator 1,000 times? Then, you will waste a lot of resources.
 
 In the example, you could see I choose to close done channel to send message because this characteristic `Can read data from closed channel`.
 
