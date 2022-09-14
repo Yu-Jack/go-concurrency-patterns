@@ -11,11 +11,13 @@ func generateData(done <-chan struct{}) <-chan int {
 	go func(data chan int) {
 		defer close(data)
 
-		for i := 0; i < 10; i++ {
+		i := 0
+		for {
 			select {
 			case <-done:
 				return
 			case data <- i:
+				i++
 			}
 		}
 
@@ -30,11 +32,11 @@ func main() {
 
 	counter := 0
 	for d := range data {
-		fmt.Println(d)
-
+		fmt.Println(counter, d)
 		counter++
 		if counter == 5 {
 			close(done)
+			break
 		}
 	}
 
