@@ -14,10 +14,11 @@ const (
 	jobSize    = 20
 )
 
-func worker(ctx context.Context, id int, job <-chan int) <-chan int {
+func worker(ctx context.Context, id int, job <-chan int, wg *sync.WaitGroup) <-chan int {
 	result := make(chan int)
 
 	go func() {
+		defer wg.Done()
 		defer close(result)
 
 		for {
@@ -98,6 +99,8 @@ func fanIn(ctx context.Context, sources ...<-chan int) <-chan int {
 }
 
 func main() {
+	wg := &sync.WaitGroup{} // for detecting worker all closed
+
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
@@ -105,7 +108,8 @@ func main() {
 	results := make([]<-chan int, workerSize)
 
 	for i := 0; i < workerSize; i++ {
-		results[i] = worker(ctx, i, jobs)
+		wg.Add(1)
+		results[i] = worker(ctx, i, jobs, wg)
 	}
 
 	flow := fanIn(ctx, results...)
@@ -113,5 +117,6 @@ func main() {
 		log.Printf("Result is :%d", data)
 	}
 
+	wg.Wait()
 	fmt.Printf("expected 1 goroutine, got goroutine: %d\n", runtime.NumGoroutine())
 }
