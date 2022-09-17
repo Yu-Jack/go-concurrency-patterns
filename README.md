@@ -29,6 +29,7 @@ This repo demos for golang concurrency patterns after read [Concurrency in Go](h
 |:---------------------------------------------|
 | [01: Graceful Shutdown](./other/01-graceful) | 
 | [02: Pub/Sub](./other/02-pub-sub)            |
+| [03: Worker Pool](./other/03-worker-pool)    |
 
 # References
 
