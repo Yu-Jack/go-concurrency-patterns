@@ -25,6 +25,8 @@ This repo demos for golang concurrency patterns after read [Concurrency in Go](h
 
 # Related Usage
 
+These examples are built with above related concepts. 
+
 | Other Usage                                  |
 |:---------------------------------------------|
 | [01: Graceful Shutdown](./other/01-graceful) | 
