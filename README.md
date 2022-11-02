@@ -8,7 +8,7 @@ This repo demos for golang concurrency patterns after read [Concurrency in Go](h
 
 # Outline
 
-
+test
 
 | Concurrency Pattern                           |
 |-----------------------------------------------|
