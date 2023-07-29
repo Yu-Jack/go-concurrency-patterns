@@ -6,6 +6,7 @@ This repo demos for golang concurrency patterns after read [Concurrency in Go](h
 2. I reorder the pattern for easily learning based on my opinion. So there might be some differences between repo and book. 
 3. In each example, it will print `expected 1 goroutine, got goroutine: 1`. That means the program close all goroutines safely (except main goroutine) to avoid goroutine leaks.
 
+There is an simple introduction [article](https://yu-jack.github.io/2022/10/04/go-concurrency/) written in Chinese. Feel free to read it.
 # Outline
 
 
